@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☦️ 东正教 & 希腊新闻中心</title>
+    <style>
+        [data-theme="dark"] {
+            --gold: #C5A55A; --dark-gold: #8B7335;
+            --bg-dark: #0a0a1a; --bg-card: #111128; --bg-sidebar: #0d0d20; --bg-modal: #151530;
+            --bg-briefing: linear-gradient(135deg, #1a1a3e, #0d0d2e);
+            --text-primary: #e8e8e8; --text-secondary: #7777aa;
+            --border: #1e1e3a; --shadow: rgba(0,0,0,.4);
+        }
+        [data-theme="light"] {
+            --gold: #B8923F; --dark-gold: #8B6F1F;
+            --bg-dark: #f5f5f0; --bg-card: #ffffff; --bg-sidebar: #faf9f5; --bg-modal: #ffffff;
+            --bg-briefing: linear-gradient(135deg, #fff8e8, #f0e8d4);
+            --text-primary: #2a2a3a; --text-secondary: #666688;
+            --border: #d8d4c5; --shadow: rgba(0,0,0,.08);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI','Roboto',Arial,sans-serif; background:var(--bg-dark); color:var(--text-primary); display:flex; min-height:100vh; transition:background .3s,color .3s; }
+
+        /* ===== 侧边栏 ===== */
+        .sidebar { width:260px; background:var(--bg-sidebar); border-right:1px solid var(--border); position:fixed; top:0; left:0; height:100vh; overflow-y:auto; z-index:200; transition:transform .3s,background .3s; }
+        .sidebar-header { padding:18px 16px; border-bottom:1px solid var(--border); text-align:center; }
+        .sidebar-header h1 { font-size:1.2em; color:var(--gold); }
+        .sidebar-header .sub { font-size:.72em; color:var(--text-secondary); margin-top:3px; }
+        .sidebar-section { padding:10px 0; border-bottom:1px solid var(--border); }
+        .sidebar-section h3 { color:var(--text-secondary); font-size:.68em; text-transform:uppercase; letter-spacing:1.5px; padding:0 14px; margin-bottom:6px; }
+
+        .nav-item { display:flex; align-items:center; padding:9px 14px; cursor:pointer; border-left:3px solid transparent; gap:8px; transition:all .2s; font-size:.88em; }
+        .nav-item:hover { background:rgba(197,165,90,.06); }
+        .nav-item.active { background:rgba(197,165,90,.12); border-left-color:var(--gold); }
+        .nav-item .ni { width:22px; text-align:center; }
+        .nav-item .nl { flex:1; }
+        .nav-item .nc { background:rgba(127,127,127,.15); color:var(--text-secondary); padding:1px 7px; border-radius:10px; font-size:.7em; }
+        .nav-item.active .nc { background:var(--gold); color:#fff; }
+
+        .ctrl-wrap { padding:8px 14px; }
+        .ctrl-wrap label { font-size:.72em; color:var(--text-secondary); display:block; margin-bottom:5px; }
+        .ctrl-wrap select { width:100%; padding:7px 10px; background:var(--bg-dark); color:var(--text-primary); border:1px solid var(--border); border-radius:6px; font-size:.85em; cursor:pointer; }
+
+        /* ===== 主内容 ===== */
+        .main { margin-left:260px; flex:1; min-height:100vh; display:flex; flex-direction:column; }
+
+        /* ===== 顶部栏 ===== */
+        .topbar { background:var(--bg-card); border-bottom:1px solid var(--border); padding:10px 20px; display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:100; }
+        .menu-toggle { display:none; background:none; border:none; color:var(--gold); font-size:1.4em; cursor:pointer; padding:2px 6px; }
+        .search-wrap { flex:1; max-width:520px; }
+        .search-wrap input { width:100%; padding:8px 16px; border:1px solid var(--border); border-radius:20px; background:var(--bg-dark); color:var(--text-primary); font-size:.88em; outline:none; }
+        .search-wrap input:focus { border-color:var(--gold); }
+
+        .topbar-controls { display:flex; align-items:center; gap:8px; margin-left:auto; }
+        .mini-group { display:flex; gap:3px; padding:3px; border:1px solid var(--border); border-radius:10px; background:rgba(127,127,127,.05); }
+        .mini-btn { border:none; background:transparent; color:var(--text-secondary); padding:5px 10px; cursor:pointer; border-radius:7px; font-size:.78em; transition:all .2s; }
+        .mini-btn:hover { color:var(--gold); }
+        .mini-btn.active { background:var(--gold); color:#fff; font-weight:600; }
+        .icon-btn { border:1px solid var(--border); background:transparent; color:var(--gold); padding:6px 10px; border-radius:8px; cursor:pointer; transition:all .2s; }
+        .icon-btn:hover { border-color:var(--gold); transform:scale(1.05); }
+
+        /* ===== 简报 ===== */
+        .briefing-box { margin:16px 20px; background:var(--bg-briefing); border:1px solid var(--gold); border-radius:14px; padding:20px; box-shadow:0 4px 20px var(--shadow); }
+        .briefing-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:10px; }
+        .briefing-title { font-size:1.15em; color:var(--gold); display:flex; align-items:center; gap:8px; font-weight:700; }
+        .briefing-meta { font-size:.75em; color:var(--text-secondary); }
+        .briefing-toggle { background:var(--gold); color:#fff; border:none; padding:6px 14px; border-radius:8px; cursor:pointer; font-size:.8em; font-weight:600; }
+        .briefing-content { display:none; }
+        .briefing-content.show { display:block; animation:fadeIn .3s; }
+        .briefing-summary { color:var(--text-primary); font-size:.92em; line-height:1.8; white-space:pre-wrap; padding:10px 0; }
+        .highlights-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin:12px 0; }
+        .highlight-card { background:rgba(197,165,90,.08); border-left:3px solid var(--gold); padding:10px 12px; border-radius:6px; }
+        .highlight-card .ht { font-weight:600; font-size:.88em; margin-bottom:4px; color:var(--gold); }
+        .highlight-card .hc { font-size:.8em; color:var(--text-secondary); line-height:1.5; }
+        .highlight-card .htag { display:inline-block; font-size:.7em; padding:1px 7px; background:var(--gold); color:#fff; border-radius:8px; margin-top:5px; }
+        .ops-tips { background:rgba(46,139,87,.1); border-left:3px solid #2E8B57; padding:10px 14px; border-radius:6px; margin-top:10px; }
+        .ops-tips .ot { font-weight:600; color:#5dba7d; font-size:.88em; margin-bottom:6px; }
+        .ops-tips .oc { font-size:.83em; color:var(--text-primary); line-height:1.7; white-space:pre-wrap; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(-5px)} to{opacity:1;transform:translateY(0)} }
+
+        /* ===== 页面标题 ===== */
+        .page-header { padding:10px 20px 8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+        .page-header h2 { font-size:1.25em; color:var(--gold); display:flex; align-items:center; gap:8px; }
+        .count-badge { background:rgba(197,165,90,.12); border:1px solid var(--gold); color:var(--gold); padding:3px 12px; border-radius:12px; font-size:.8em; }
+
+        /* ===== 主题筛选 ===== */
+        .topic-filters { padding:0 20px 8px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+        .filter-label { font-size:.78em; color:var(--text-secondary); margin-right:5px; }
+        .topic-btn { background:rgba(127,127,127,.08); color:var(--text-secondary); border:1px solid var(--border); padding:4px 11px; border-radius:14px; cursor:pointer; font-size:.78em; transition:all .2s; }
+        .topic-btn:hover, .topic-btn.active { background:var(--gold); color:#fff; border-color:var(--gold); }
+
+        /* ===== 评分筛选 ===== */
+        .score-filter-bar { padding:0 20px 8px; display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+        .score-btn { background:rgba(127,127,127,.08); color:var(--text-secondary); border:1px solid var(--border); padding:4px 11px; border-radius:14px; cursor:pointer; font-size:.78em; transition:all .2s; }
+        .score-btn:hover, .score-btn.active { background:var(--gold); color:#fff; border-color:var(--gold); }
+
+        /* ===== 来源筛选 ===== */
+        .source-filters { padding:0 20px 10px; display:flex; flex-wrap:wrap; gap:5px; }
+        .src-btn { background:rgba(127,127,127,.08); color:var(--text-secondary); border:1px solid var(--border); padding:4px 10px; border-radius:12px; cursor:pointer; font-size:.74em; transition:all .2s; }
+        .src-btn:hover, .src-btn.active { background:var(--gold); color:#fff; border-color:var(--gold); }
+
+        /* ===== 新闻列表 ===== */
+        .news-container { padding:0 20px 30px; flex:1; }
+        .news-list { display:flex; flex-direction:column; gap:12px; }
+        .news-card { background:var(--bg-card); border:1px solid var(--border); border-radius:10px; display:flex; overflow:hidden; transition:all .25s; }
+        .news-card:hover { border-color:rgba(197,165,90,.4); box-shadow:0 4px 20px var(--shadow); }
+
+        .card-img { width:200px; min-height:160px; flex-shrink:0; background:linear-gradient(135deg,#1a1a3e,#0d0d2e); position:relative; overflow:hidden; }
+        .card-img img { width:100%; height:100%; object-fit:cover; display:block; }
+        .cat-badge { position:absolute; top:8px; left:8px; padding:2px 8px; border-radius:8px; font-size:.62em; font-weight:bold; color:#fff; }
+        .time-badge { position:absolute; bottom:8px; right:8px; background:rgba(0,0,0,.75); color:#fff; padding:2px 7px; border-radius:7px; font-size:.68em; }
+        .no-img { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5em; color:#fff; }
+
+        .card-body { padding:14px 16px; flex:1; display:flex; flex-direction:column; min-width:0; }
+        .card-source { font-size:.74em; color:var(--gold); margin-bottom:5px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+        .score-badge { background:rgba(197,165,90,.1); border:1px solid rgba(197,165,90,.3); color:var(--gold); padding:1px 8px; border-radius:8px; font-size:.95em; font-weight:600; white-space:nowrap; }
+        .score-h { background:rgba(46,139,87,.15); border-color:rgba(46,139,87,.4); color:#2E8B57; }
+        .score-vh { background:rgba(220,80,80,.15); border-color:rgba(220,80,80,.4); color:#dc5050; }
+
+        .topic-chips { display:flex; flex-wrap:wrap; gap:5px; margin:6px 0 8px; }
+        .topic-chip { font-size:.66em; padding:2px 7px; border-radius:8px; background:rgba(197,165,90,.12); color:var(--gold); border:1px solid rgba(197,165,90,.25); }
+
+        .card-title { font-size:.98em; font-weight:600; line-height:1.4; margin-bottom:6px; color:var(--text-primary); }
+        .card-title-en { color:var(--text-secondary); font-size:.85em; margin-top:3px; font-weight:400; font-style:italic; }
+        .card-desc { font-size:.83em; line-height:1.6; flex:1; color:var(--text-secondary); display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+        .card-desc-en { font-size:.78em; margin-top:4px; opacity:.7; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+        .trans-tag { display:inline-flex; align-items:center; gap:3px; font-size:.65em; padding:1px 6px; border-radius:5px; margin-bottom:4px; }
+        .trans-tag.zh { background:rgba(46,139,87,.2); color:#2E8B57; border:1px solid rgba(46,139,87,.4); }
+        .trans-tag.en { background:rgba(26,58,107,.2); color:#4477aa; border:1px solid rgba(26,58,107,.4); }
+        .trans-tag.no { background:rgba(127,127,127,.15); color:var(--text-secondary); border:1px solid var(--border); }
+
+        .card-footer { display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:8px; border-top:1px solid var(--border); gap:8px; flex-wrap:wrap; }
+        .card-date { font-size:.72em; color:var(--text-secondary); }
+        .card-orig-date { font-size:.65em; color:var(--text-secondary); opacity:.7; font-style:italic; margin-top:2px; }
+        .card-actions { display:flex; gap:6px; }
+        .act-btn { padding:5px 12px; border-radius:10px; border:none; cursor:pointer; font-size:.75em; font-weight:600; transition:all .2s; }
+        .read-btn { background:var(--gold); color:#fff; }
+        .read-btn:hover { background:var(--dark-gold); }
+        .copy-btn { background:rgba(46,139,87,.15); color:#2E8B57; border:1px solid rgba(46,139,87,.4); }
+        .copy-btn:hover { background:#2E8B57; color:#fff; }
+
+        /* ===== 模态框 ===== */
+        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.75); z-index:9999; justify-content:center; align-items:center; padding:20px; }
+        .modal-overlay.show { display:flex; }
+        .modal { background:var(--bg-modal); border:1px solid var(--gold); border-radius:14px; padding:24px; max-width:580px; width:100%; max-height:85vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+        .modal .micon { font-size:2.5em; margin-bottom:8px; text-align:center; }
+        .modal h3 { color:var(--gold); font-size:1.15em; margin-bottom:10px; text-align:center; }
+        .modal p { color:var(--text-secondary); font-size:.875em; line-height:1.7; margin-bottom:8px; }
+        .modal .murl { font-size:.72em; color:var(--text-secondary); word-break:break-all; margin:8px 0 16px; padding:6px 10px; background:rgba(127,127,127,.05); border-radius:6px; border:1px solid var(--border); }
+        .modal-btns { display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+        .mbtn { padding:9px 22px; border-radius:8px; border:none; cursor:pointer; font-size:.875em; font-weight:600; transition:all .2s; }
+        .mbtn.confirm { background:var(--gold); color:#fff; }
+        .mbtn.confirm:hover { background:var(--dark-gold); }
+        .mbtn.cancel { background:transparent; border:1px solid var(--border); color:var(--text-secondary); }
+        .mbtn.cancel:hover { border-color:var(--gold); color:var(--gold); }
+
+        .social-tabs { display:flex; gap:5px; margin-bottom:12px; border-bottom:1px solid var(--border); }
+        .stab { padding:8px 16px; background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:.85em; border-bottom:2px solid transparent; }
+        .stab.active { color:var(--gold); border-bottom-color:var(--gold); font-weight:600; }
+        .social-content { display:none; }
+        .social-content.show { display:block; }
+        .social-text { background:var(--bg-dark); border:1px solid var(--border); border-radius:8px; padding:14px; font-size:.88em; line-height:1.7; color:var(--text-primary); white-space:pre-wrap; max-height:280px; overflow-y:auto; margin-bottom:10px; }
+
+        .no-results,.loading { text-align:center; padding:60px 20px; color:var(--text-secondary); }
+        .big-icon { font-size:3em; margin-bottom:12px; }
+        .spinner { display:inline-block; width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin .8s linear infinite; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        .footer { text-align:center; padding:20px; border-top:1px solid var(--border); color:var(--text-secondary); font-size:.78em; }
+        .footer .cross { font-size:1.4em; color:var(--gold); }
+
+        .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--gold); color:#fff; padding:12px 24px; border-radius:10px; font-size:.9em; font-weight:600; z-index:10000; opacity:0; transition:opacity .3s; pointer-events:none; }
+        .toast.show { opacity:1; }
+
+        .sidebar-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.5); z-index:150; }
+        .sidebar-overlay.show { display:block; }
+
+        @media(max-width:900px) {
+            .sidebar { transform:translateX(-100%); width:280px; }
+            .sidebar.open { transform:translateX(0); }
+            .main { margin-left:0; }
+            .menu-toggle { display:block; }
+            .card-img { width:130px; }
+            .topbar-controls .mini-group:nth-child(1) { display:none; } /* 移动端隐藏语言组节省空间 */
+        }
+        @media(max-width:600px) {
+            .news-card { flex-direction:column; }
+            .card-img { width:100%; height:160px; min-height:unset; }
+            .briefing-box { margin:12px; padding:14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- 弹框1：跳转确认 -->
+<div class="modal-overlay" id="modal1">
+    <div class="modal">
+        <div class="micon">⚠️</div>
+        <h3>即将跳转到外部网站</h3>
+        <p>您即将离开本站，跳转到原始新闻网页。<br>请注意网络安全，确认是否继续？</p>
+        <div class="murl" id="m1url"></div>
+        <div class="modal-btns">
+            <button class="mbtn cancel" onclick="closeM1()">取消</button>
+            <button class="mbtn confirm" onclick="toM2()">确认跳转</button>
+        </div>
+    </div>
+</div>
+
+<!-- 弹框2：安全提醒 -->
+<div class="modal-overlay" id="modal2">
+    <div class="modal">
+        <div class="micon">🛡️</div>
+        <h3>安全提醒</h3>
+        <p>请考虑清楚！建议使用 <strong style="color:var(--gold);">无痕模式</strong> 打开外部链接。</p>
+        <p style="color:#dc5050;">您需要自行负责浏览安全。</p>
+        <div class="modal-btns">
+            <button class="mbtn cancel" onclick="closeM2()">我再想想</button>
+            <button class="mbtn confirm" onclick="doGo()">我已了解，继续前往</button>
+        </div>
+    </div>
+</div>
+
+<!-- 弹框3：社交文案 -->
+<div class="modal-overlay" id="modalSocial">
+    <div class="modal">
+        <h3>📝 社交媒体文案</h3>
+        <p style="text-align:center;font-size:.8em;" id="socialNewsTitle"></p>
+        <div class="social-tabs">
+            <button class="stab active" onclick="switchTab('zh',this)">🇨🇳 中文</button>
+            <button class="stab" onclick="switchTab('el',this)">🇬🇷 Ελληνικά</button>
+            <button class="stab" onclick="switchTab('en',this)">🇬🇧 English</button>
+        </div>
+        <div class="social-content show" id="sc-zh"><div class="social-text" id="st-zh">-</div></div>
+        <div class="social-content" id="sc-el"><div class="social-text" id="st-el">-</div></div>
+        <div class="social-content" id="sc-en"><div class="social-text" id="st-en">-</div></div>
+        <div class="modal-btns" style="justify-content:flex-end;">
+            <button class="mbtn cancel" onclick="closeSocial()">关闭</button>
+            <button class="mbtn confirm" onclick="copyCurrent()">📋 复制文案</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h1>☦️ 东正教新闻中心</h1>
+        <div class="sub">Greece · Orthodox · World</div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="ctrl-wrap">
+            <label>📅 日期 / Date</label>
+            <select id="dateSelect" onchange="switchDate(this.value)">
+                <option value="today">📌 今日 Today</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <h3>来源大类 Source</h3>
+        <div class="nav-item active" onclick="switchCat('all',this)">
+            <span class="ni">📰</span>
+            <span class="nl">全部 All</span>
+            <span class="nc" id="cnt-all">-</span>
+        </div>
+    </div>
+    <div class="sidebar-section" id="catNav"></div>
+
+    <div class="sidebar-section">
+        <h3>系统 System</h3>
+        <div style="padding:8px 14px;font-size:.75em;color:var(--text-secondary);line-height:1.7;">
+            <div>📡 来源: <span id="s-src">-</span> 个</div>
+            <div>🌐 已翻译: <span id="s-trans">-</span> 条</div>
+            <div>📝 已生成文案: <span id="s-social">-</span> 条</div>
+            <div>🕐 更新: <span id="s-time">-</span></div>
+        </div>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="topbar">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="search-wrap">
+            <input type="text" id="searchInput" placeholder="🔍 搜索标题、内容或来源..." oninput="applyFilters()">
+        </div>
+        <div class="topbar-controls">
+            <div class="mini-group">
+                <button class="mini-btn active" data-lang="zh" onclick="switchLang('zh',this)">中文</button>
+                <button class="mini-btn" data-lang="en" onclick="switchLang('en',this)">原文</button>
+                <button class="mini-btn" data-lang="both" onclick="switchLang('both',this)">双语</button>
+            </div>
+            <div class="mini-group">
+                <button class="mini-btn active" id="themeDark" onclick="switchTheme('dark',this)">🌙</button>
+                <button class="mini-btn" id="themeLight" onclick="switchTheme('light',this)">☀️</button>
+            </div>
+            <button class="icon-btn" onclick="location.reload()" title="刷新">⟳</button>
+        </div>
+    </div>
+
+    <!-- 简报 -->
+    <div class="briefing-box" id="briefingBox" style="display:none;">
+        <div class="briefing-header">
+            <div class="briefing-title">📰 今日东正教世界简报</div>
+            <div>
+                <span class="briefing-meta" id="briefingMeta"></span>
+                <button class="briefing-toggle" onclick="toggleBriefing()" id="briefingBtn">展开 ▼</button>
+            </div>
+        </div>
+        <div class="briefing-content" id="briefingContent">
+            <div class="briefing-summary" id="briefingSummary"></div>
+            <div class="highlights-grid" id="highlightsGrid"></div>
+            <div class="ops-tips">
+                <div class="ot">💡 社交媒体运营建议</div>
+                <div class="oc" id="opsTips"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h2><span id="hIcon">☦️</span> <span id="hTitle">加载中...</span></h2>
+        <span class="count-badge" id="hCount">-</span>
+    </div>
+
+    <div class="topic-filters">
+        <span class="filter-label">📑 主题:</span>
+        <div id="topicFilters" style="display:contents;"></div>
+    </div>
+
+    <div class="score-filter-bar">
+        <span class="filter-label">⭐ 评分:</span>
+        <button class="score-btn active" onclick="filterScore(0,this)">全部</button>
+        <button class="score-btn" onclick="filterScore(8,this)">⭐ 重要 (≥8)</button>
+        <button class="score-btn" onclick="filterScore(12,this)">⭐⭐ 高分 (≥12)</button>
+        <button class="score-btn" onclick="filterScore(15,this)">🔥 紧急 (≥15)</button>
+    </div>
+
+    <div class="source-filters" id="sourceFilters"></div>
+
+    <div class="news-container">
+        <div class="news-list" id="newsList">
+            <div class="loading"><div class="spinner"></div><p style="margin-top:14px;">正在加载新闻...</p></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="cross">☦</div>
+        <p>Δόξα τω Θεώ πάντων ένεκεν · Glory to God for all things! · 荣耀归于上帝！</p>
+        <p style="margin-top:4px;">数据来自各东正教及国际权威新闻源 · GitHub Actions 自动更新</p>
+    </div>
+</div>
+
+<script>
+let allData = [];
+let categories = {};
+let topics = {};
+let currentCat = 'all';
+let currentTopic = 'all';
+let currentSrc = 'all';
+let currentLang = 'zh';
+let currentDate = 'today';
+let currentMinScore = 0;
+let currentSocialTab = 'zh';
+let currentSocialData = null;
+let todayStr = '';
+let pendingUrl = '';
+
+const CAT_COLORS = {
+    greek_local:'#0D5EAF', greek_orthodox:'#8B6914',
+    europe:'#003399', global:'#2E8B57', science:'#6A0DAD'
+};
+
+// ===== 主题 =====
+function switchTheme(theme, btn) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    document.getElementById('themeDark').classList.toggle('active', theme === 'dark');
+    document.getElementById('themeLight').classList.toggle('active', theme === 'light');
+}
+
+(function initTheme() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    setTimeout(() => {
+        const dark = document.getElementById('themeDark');
+        const light = document.getElementById('themeLight');
+        if (dark && light) {
+            dark.classList.toggle('active', saved === 'dark');
+            light.classList.toggle('active', saved === 'light');
+        }
+    }, 100);
+})();
+
+// ===== 加载 =====
+async function init() {
+    try {
+        const r = await fetch('news_data.json');
+        const d = await r.json();
+        allData = d.articles || [];
+        categories = d.categories || {};
+        topics = d.topics || {};
+        todayStr = d.today_athens || '';
+
+        document.getElementById('s-src').textContent = d.sources_count || 0;
+        document.getElementById('s-trans').textContent = d.translated_count || 0;
+        document.getElementById('s-social').textContent = d.social_count || 0;
+        document.getElementById('s-time').textContent = (d.last_updated_athens || '').slice(0,16);
+        document.getElementById('cnt-all').textContent = d.total_count || 0;
+
+        renderBriefing(d.briefing);
+        buildDateSel(d.available_dates || []);
+        buildCatNav(d.source_stats || {});
+        buildTopicFilters(d.topic_stats || {});
+        switchDate('today');
+    } catch(e) {
+        console.error(e);
+        document.getElementById('newsList').innerHTML = '<div class="no-results"><div class="big-icon">❌</div><p>加载失败，请刷新</p></div>';
+    }
+}
+
+// ===== 简报 =====
+function renderBriefing(b) {
+    if (!b || !b.summary) return;
+    document.getElementById('briefingBox').style.display = 'block';
+    document.getElementById('briefingMeta').textContent = b.generated_at ? `生成于 ${b.generated_at} · 基于${b.based_on_count||0}条` : '';
+    document.getElementById('briefingSummary').textContent = b.summary || '';
+
+    const grid = document.getElementById('highlightsGrid');
+    grid.innerHTML = '';
+    (b.highlights || []).forEach(h => {
+        const div = document.createElement('div');
+        div.className = 'highlight-card';
+        div.innerHTML = `
+            <div class="ht">${h.title || ''}</div>
+            <div class="hc">${h.content || ''}</div>
+            ${h.tag ? `<span class="htag">${h.tag}</span>` : ''}`;
+        grid.appendChild(div);
+    });
+
+    const tips = b.ops_tips || b['运营建议'] || b.tips || '';
+    document.getElementById('opsTips').textContent = tips;
+}
+
+function toggleBriefing() {
+    const c = document.getElementById('briefingContent');
+    const b = document.getElementById('briefingBtn');
+    c.classList.toggle('show');
+    b.textContent = c.classList.contains('show') ? '收起 ▲' : '展开 ▼';
+}
+
+// ===== 日期 =====
+function buildDateSel(dates) {
+    const sel = document.getElementById('dateSelect');
+    sel.innerHTML = `<option value="today">📌 今日 (${todayStr})</option>
+                     <option value="all">📋 全部日期</option>`;
+    dates.forEach(d => {
+        if (d !== todayStr) {
+            const o = document.createElement('option');
+            o.value = d; o.textContent = `📅 ${d}`;
+            sel.appendChild(o);
+        }
+    });
+}
+
+// ===== 来源大类 =====
+function buildCatNav(stats) {
+    const nav = document.getElementById('catNav');
+    nav.innerHTML = '<h3>分类 Categories</h3>';
+    Object.entries(categories).forEach(([id, info]) => {
+        const cnt = stats[id] ? stats[id].count : 0;
+        const label = info.name_zh;
+        const div = document.createElement('div');
+        div.className = 'nav-item';
+        div.onclick = () => switchCat(id, div);
+        div.innerHTML = `<span class="ni">${info.icon}</span><span class="nl">${label}</span><span class="nc">${cnt}</span>`;
+        nav.appendChild(div);
+    });
+}
+
+// ===== 主题 =====
+function buildTopicFilters(stats) {
+    const box = document.getElementById('topicFilters');
+    box.innerHTML = '';
+
+    const allBtn = document.createElement('button');
+    allBtn.className = 'topic-btn active';
+    allBtn.textContent = `全部 (${allData.length})`;
+    allBtn.onclick = () => filterTopic('all', allBtn);
+    box.appendChild(allBtn);
+
+    // 按数量排序
+    const sorted = Object.entries(stats).sort((a,b) => b[1] - a[1]);
+    sorted.forEach(([tag, count]) => {
+        const meta = topics[tag];
+        if (!meta || count === 0) return;
+        const btn = document.createElement('button');
+        btn.className = 'topic-btn';
+        btn.textContent = `${meta.icon} ${meta.name_zh} (${count})`;
+        btn.onclick = () => filterTopic(tag, btn);
+        box.appendChild(btn);
+    });
+}
+
+function filterTopic(tag, btn) {
+    currentTopic = tag;
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+}
+
+// ===== 来源 =====
+function buildSrcFilters(catId) {
+    const pool = catId === 'all' ? allData : allData.filter(a => a.category === catId);
+    const sources = [...new Set(pool.map(a => a.source))];
+    const box = document.getElementById('sourceFilters');
+    box.innerHTML = '';
+
+    const lab = document.createElement('span');
+    lab.className = 'filter-label';
+    lab.textContent = '🏷️ 来源:';
+    box.appendChild(lab);
+
+    const all = mkBtn(`全部 (${pool.length})`, true, () => filterSrc('all', all));
+    box.appendChild(all);
+    sources.forEach(src => {
+        const cnt = pool.filter(a => a.source === src).length;
+        const sample = pool.find(a => a.source === src);
+        const icon = sample?.icon || '';
+        const sourceName = currentLang === 'zh' ? (sample?.source_zh || src) : src;
+        const btn = mkBtn(`${icon} ${sourceName} (${cnt})`, false, () => filterSrc(src, btn));
+        box.appendChild(btn);
+    });
+}
+
+function mkBtn(text, active, cb) {
+    const b = document.createElement('button');
+    b.className = 'src-btn' + (active ? ' active' : '');
+    b.textContent = text;
+    b.onclick = cb;
+    return b;
+}
+
+function filterSrc(src, btn) {
+    currentSrc = src;
+    document.querySelectorAll('.src-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+}
+
+function filterScore(min, btn) {
+    currentMinScore = min;
+    document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+}
+
+function switchDate(val) { currentDate = val; applyFilters(); }
+
+function switchCat(id, el) {
+    currentCat = id;
+    currentSrc = 'all';
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+    buildSrcFilters(id);
+    applyFilters();
+    if (window.innerWidth <= 900) toggleSidebar();
+}
+
+function switchLang(lang, btn) {
+    currentLang = lang;
+    document.querySelectorAll('.mini-btn[data-lang]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    buildSrcFilters(currentCat);
+    applyFilters();
+}
+
+function applyFilters() {
+    const kw = document.getElementById('searchInput').value.toLowerCase().trim();
+    let list = allData;
+
+    if (currentDate === 'today') list = list.filter(a => a.athens_date === todayStr);
+    else if (currentDate !== 'all') list = list.filter(a => a.athens_date === currentDate);
+
+    if (currentCat !== 'all') list = list.filter(a => a.category === currentCat);
+    if (currentTopic !== 'all') list = list.filter(a => (a.topic_tags || []).includes(currentTopic));
+    if (currentSrc !== 'all') list = list.filter(a => a.source === currentSrc);
+    if (currentMinScore > 0) list = list.filter(a => (a.score || 0) >= currentMinScore);
+
+    if (kw) list = list.filter(a =>
+        (a.title||'').toLowerCase().includes(kw) ||
+        (a.title_zh||'').toLowerCase().includes(kw) ||
+        (a.description||'').toLowerCase().includes(kw) ||
+        (a.description_zh||'').toLowerCase().includes(kw) ||
+        (a.source||'').toLowerCase().includes(kw) ||
+        (a.source_zh||'').toLowerCase().includes(kw));
+
+    updateHeader(list.length);
+    renderNews(list);
+}
+
+function updateHeader(count) {
+    const dateLabel = currentDate === 'today' ? `今日新闻 (${todayStr})` :
+                      currentDate === 'all' ? '全部新闻' : `${currentDate}`;
+    let extra = '';
+    if (currentCat !== 'all') extra += ` · ${categories[currentCat]?.name_zh || ''}`;
+    if (currentTopic !== 'all') extra += ` · ${topics[currentTopic]?.name_zh || ''}`;
+    document.getElementById('hIcon').textContent = currentCat === 'all' ? '📰' : (categories[currentCat]?.icon || '📰');
+    document.getElementById('hTitle').textContent = dateLabel + extra;
+    document.getElementById('hCount').textContent = `${count} 条`;
+}
+
+function renderNews(list) {
+    const el = document.getElementById('newsList');
+    if (!list.length) {
+        el.innerHTML = `<div class="no-results"><div class="big-icon">📭</div><p>没有符合条件的新闻</p></div>`;
+        return;
+    }
+
+    el.innerHTML = list.map(a => {
+        const cc = CAT_COLORS[a.category] || '#555';
+        const ci = categories[a.category];
+        const catLabel = ci ? ci.name_zh : '';
+        const hasZh = !!(a.title_zh);
+        const hasSocial = !!(a.social_post);
+        const enc = encodeURIComponent(a.link || '');
+
+        const sourceName = currentLang === 'zh' ? (a.source_zh || a.source || '') : (a.source || '');
+
+        let titleHtml = '', descHtml = '', transTag = '';
+
+        if (currentLang === 'zh') {
+            if (hasZh) {
+                titleHtml = `<div class="card-title">${a.title_zh}</div>`;
+                descHtml = `<div class="card-desc">${a.description_zh || a.description || ''}</div>`;
+                transTag = `<span class="trans-tag zh">🌐 AI中文</span>`;
+            } else {
+                titleHtml = `<div class="card-title">${a.title || ''}</div>`;
+                descHtml = `<div class="card-desc">${a.description || ''}</div>`;
+                transTag = `<span class="trans-tag no">📄 原文（未翻译）</span>`;
+            }
+        } else if (currentLang === 'en') {
+            titleHtml = `<div class="card-title">${a.title || ''}</div>`;
+            descHtml = `<div class="card-desc">${a.description || ''}</div>`;
+            transTag = `<span class="trans-tag en">📰 Original</span>`;
+        } else {
+            if (hasZh) {
+                titleHtml = `<div class="card-title">${a.title_zh}</div>
+                             <div class="card-title-en">${a.title || ''}</div>`;
+                descHtml = `<div class="card-desc">${a.description_zh || ''}</div>
+                            <div class="card-desc card-desc-en">${a.description || ''}</div>`;
+                transTag = `<span class="trans-tag zh">🌐 双语</span>`;
+            } else {
+                titleHtml = `<div class="card-title">${a.title || ''}</div>`;
+                descHtml = `<div class="card-desc">${a.description || ''}</div>`;
+                transTag = `<span class="trans-tag no">📄 原文</span>`;
+            }
+        }
+
+        const score = a.score || 0;
+        const sc = score >= 15 ? 'score-vh' : score >= 12 ? 'score-h' : '';
+        const imgHtml = a.image
+            ? `<img src="${a.image}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'no-img\\'>${a.icon||'📰'}</div>'">`
+            : `<div class="no-img">${a.icon || '📰'}</div>`;
+
+        const topicChips = (a.topic_tags || []).slice(0, 4).map(tag => {
+            const meta = topics[tag];
+            if (!meta) return '';
+            return `<span class="topic-chip">${meta.icon} ${meta.name_zh}</span>`;
+        }).join('');
+
+        return `
+        <div class="news-card">
+            <div class="card-img">
+                ${imgHtml}
+                <span class="cat-badge" style="background:${cc}">${ci?.icon||''} ${catLabel}</span>
+                <span class="time-badge">🕐 ${a.athens_time||'??:??'}</span>
+            </div>
+            <div class="card-body">
+                <div class="card-source">
+                    <span>${a.icon||'📰'} ${sourceName}</span>
+                    <span class="score-badge ${sc}">⭐ ${score}</span>
+                </div>
+                ${transTag}
+                ${titleHtml}
+                ${topicChips ? `<div class="topic-chips">${topicChips}</div>` : ''}
+                ${descHtml}
+                <div class="card-footer">
+                    <div>
+                        <div class="card-date">📅 ${a.athens_date||''} ${a.athens_time||''} (雅典)</div>
+                        ${a.original_date ? `<div class="card-orig-date">原始: ${a.original_date.slice(0,30)}</div>` : ''}
+                    </div>
+                    <div class="card-actions">
+                        ${hasSocial ? `<button class="act-btn copy-btn" onclick="showSocial('${a.id}')">📝 文案</button>` : ''}
+                        <button class="act-btn read-btn" onclick="openLink('${enc}')">查看 →</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ===== 社交文案 =====
+function showSocial(articleId) {
+    const a = allData.find(x => x.id === articleId);
+    if (!a || !a.social_post) {
+        showToast('该新闻暂无文案');
+        return;
+    }
+    try {
+        currentSocialData = JSON.parse(a.social_post);
+        document.getElementById('socialNewsTitle').textContent = a.title_zh || a.title;
+        document.getElementById('st-zh').textContent = currentSocialData.zh || '暂无';
+        document.getElementById('st-el').textContent = currentSocialData.el || '暂无';
+        document.getElementById('st-en').textContent = currentSocialData.en || '暂无';
+        document.getElementById('modalSocial').classList.add('show');
+        switchTab('zh', document.querySelector('.stab'));
+    } catch(e) {
+        showToast('文案数据错误');
+    }
+}
+
+function switchTab(lang, btn) {
+    currentSocialTab = lang;
+    document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.social-content').forEach(c => c.classList.remove('show'));
+    document.getElementById('sc-' + lang).classList.add('show');
+}
+
+function copyCurrent() {
+    if (!currentSocialData) return;
+    const text = currentSocialData[currentSocialTab] || '';
+    navigator.clipboard.writeText(text).then(() => showToast('✅ 已复制到剪贴板'))
+        .catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast('✅ 已复制');
+        });
+}
+
+function closeSocial() {
+    document.getElementById('modalSocial').classList.remove('show');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== 跳转 =====
+function openLink(enc) {
+    pendingUrl = decodeURIComponent(enc);
+    document.getElementById('m1url').textContent = pendingUrl;
+    document.getElementById('modal1').classList.add('show');
+}
+function closeM1() { document.getElementById('modal1').classList.remove('show'); pendingUrl = ''; }
+function toM2() { document.getElementById('modal1').classList.remove('show'); document.getElementById('modal2').classList.add('show'); }
+function closeM2() { document.getElementById('modal2').classList.remove('show'); pendingUrl = ''; }
+function doGo() {
+    document.getElementById('modal2').classList.remove('show');
+    if (pendingUrl) window.open(pendingUrl, '_blank', 'noopener,noreferrer');
+    pendingUrl = '';
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+}
+
+init();
+</script>
+</body>
+</html>
