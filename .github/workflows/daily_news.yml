@@ -1,0 +1,86 @@
+name: ☦️ Daily Orthodox & Greece News
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+    - cron: '0 5 * * *'
+    - cron: '0 9 * * *'
+    - cron: '0 14 * * *'
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      GEMINI_PAID_KEYS: ${{ secrets.GEMINI_PAID_KEYS }}
+      GEMINI_FREE_KEYS: ${{ secrets.GEMINI_FREE_KEYS }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_KEYS: ${{ secrets.GROQ_KEYS }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      OPENROUTER_KEYS: ${{ secrets.OPENROUTER_KEYS }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GEMINI_MODELS: ${{ secrets.GEMINI_MODELS }}
+      GROQ_MODELS: ${{ secrets.GROQ_MODELS }}
+      OPENROUTER_MODELS: ${{ secrets.OPENROUTER_MODELS }}
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 📁 Prepare
+        run: mkdir -p site
+
+      - name: 📦 Restore translation cache
+        run: |
+          if [ ! -f translation_cache.json ]; then
+            echo "{}" > translation_cache.json
+            echo "ℹ️ 新建空缓存"
+          else
+            COUNT=$(python3 -c "import json; print(len(json.load(open('translation_cache.json'))))" 2>/dev/null || echo "0")
+            echo "✅ 缓存已存在: ${COUNT} 条"
+          fi
+
+      - name: 📡 Fetch & Translate news
+        run: python scrape.py
+
+      - name: 🎨 Build website
+        run: cp template.html site/index.html
+
+      - name: 📤 Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+      - name: 💾 Save data & cache
+        run: |
+          git config --global user.name "Orthodox News Bot"
+          git config --global user.email "bot@github.com"
+
+          cp site/news_data.json ./news_data.json
+
+          git add news_data.json translation_cache.json
+
+          if [ -n "$(git status --porcelain)" ]; then
+            TODAY=$(python3 -c "import json; d=json.load(open('news_data.json')); print(d.get('today_count',0))" 2>/dev/null || echo "?")
+            TRANS=$(python3 -c "import json; d=json.load(open('news_data.json')); print(d.get('translated_count',0))" 2>/dev/null || echo "?")
+            git commit -m "☦️ $(date +'%Y-%m-%d %H:%M UTC') | 今日${TODAY}条 已翻译${TRANS}条"
+            git push
+            echo "✅ 已提交"
+          else
+            echo "ℹ️ 无变化"
+          fi
