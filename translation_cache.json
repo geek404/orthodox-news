@@ -52,5 +52,53 @@
     "description_zh": "各古迹遗址将开放至午夜前后，其中数处遗址的活动日程中还包括现场音乐会、合唱团演出或专业导览等项目。",
     "cached_at": "2026-08-14 13:15",
     "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "303d698e7c2efd8e": {
+    "title_zh": "希腊前部长斯特凡诺斯·马诺斯逝世，享年87岁",
+    "description_zh": "希腊前部长斯特凡诺斯·马诺斯逝世，享年87岁。他曾是推动希腊重大基础设施建设项目以及雅典城市改革的关键人物。",
+    "cached_at": "2026-08-15 12:24",
+    "provider": "Gemini-Free#1(gemini-flash-latest)"
+  },
+  "a44cc0a50532e65c": {
+    "title_zh": "数百人在雅典庆祝巴基斯坦独立日（附视频）",
+    "description_zh": "数百名巴基斯坦人齐聚雅典科齐亚广场庆祝独立日，共同传递团结、互助与尊重的讯息。",
+    "cached_at": "2026-08-15 12:25",
+    "provider": "Gemini-Free#1(gemini-flash-latest)"
+  },
+  "19de391cdd875a53": {
+    "title_zh": "希腊总统将出席帕纳吉亚·苏梅拉修道院庆典",
+    "description_zh": "希腊总统康斯坦蒂诺斯·塔苏拉斯将出席8月15日在伊马夏帕纳吉亚·苏梅拉修道院举行的圣母安息节庆典，并将在仪式上获颁大十字勋章。",
+    "cached_at": "2026-08-15 12:25",
+    "provider": "Gemini-Free#1(gemini-flash-latest)"
+  },
+  "1d8981590ce9770e": {
+    "title_zh": "皮层类器官中放射状胶质细胞谱系进程的时间解耦",
+    "description_zh": "在干细胞衍生的类器官中进行放射状胶质祖细胞谱系追踪发现，其表现出高度可塑的增殖能力和降低的克隆神经元多样性。这表明缺失的非细胞自主性微环境信号对于精确调控皮层谱系进展的时间节律至关重要。",
+    "cached_at": "2026-08-15 12:27",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "ac66b592d3a33e8b": {
+    "title_zh": "德国之声",
+    "description_zh": "来自德国与欧洲的新闻、深度分析与资讯服务——以30种语言呈现。",
+    "cached_at": "2026-08-15 12:28",
+    "provider": "Gemini-Free#7(gemini-flash-latest)"
+  },
+  "2a4f0a019756d9cd": {
+    "title_zh": "袭击持续升级之际，以色列空袭黎巴嫩南部致七人丧生",
+    "description_zh": "自六月达成的协议显著缓和敌对行动以来，这是以色列在黎巴嫩发动的致死人数最多的一次袭击。",
+    "cached_at": "2026-08-15 12:30",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "106a1ef9cab9abf0": {
+    "title_zh": "夏季热浪过后：从太空俯瞰欧洲焦枯大地",
+    "description_zh": "从冰川加速消融到干涸水域中沉船显露，卫星影像真实记录下了极端高温与干旱对欧洲大陆造成的严重影响。",
+    "cached_at": "2026-08-15 12:31",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "3dcdb27e4f0f0b78": {
+    "title_zh": "美国：因沙门氏菌风险 FDA召回1900万枚鸡蛋",
+    "description_zh": "美国就此次召回的鸡蛋发布了严重健康警告，称接触这些可能受污染的产品可能会导致严重疾病甚至死亡。",
+    "cached_at": "2026-08-15 12:32",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
   }
 }
