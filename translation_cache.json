@@ -100,5 +100,41 @@
     "description_zh": "美国就此次召回的鸡蛋发布了严重健康警告，称接触这些可能受污染的产品可能会导致严重疾病甚至死亡。",
     "cached_at": "2026-08-15 12:32",
     "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "a2913c933f422a05": {
+    "title_zh": "德国释放信号：或根据欧盟新公约恢复向希腊转移移民",
+    "description_zh": "德国释放信号表示，根据欧盟新的《移民与庇护公约》，可能会恢复向希腊转移寻求庇护者，此举再次引发了各方关于责任分担问题的讨论与质疑。",
+    "cached_at": "2026-08-16 12:25",
+    "provider": "Gemini-Free#2(gemini-flash-latest)"
+  },
+  "7c385910416288dc": {
+    "title_zh": "希腊玛尼地区遭遇严重洪灾 消防人员紧急营救车内被困人员",
+    "description_zh": "在遭遇暴雨袭击后，希腊东玛尼地区突发严重洪灾。消防人员已从被淹车辆中成功救出10人，据报道还有部分车辆被洪水卷入大海。",
+    "cached_at": "2026-08-16 12:27",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "1bbdf9fcf1ab239f": {
+    "title_zh": "希腊推行三年租金收入免税政策",
+    "description_zh": "希腊业主可在2026年12月31日之前申请享受符合条件的长期租金收入三年所得税免税优惠。",
+    "cached_at": "2026-08-16 12:27",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "698f8b5f32f5264e": {
+    "title_zh": "希腊裔美国人社区近期活动集锦",
+    "description_zh": "纽约长岛市马赛克艺术空间（Mosaic ArtSpace）正举办著名艺术家安东尼娅·帕帕察纳基的个展《显明隐秘》（Unseen Brought to Light），展期至9月30日。本次展览展出一系列光影雕塑，通过融汇艺术、科学与技术的视觉语言，探索生命的隐秘结构。",
+    "cached_at": "2026-08-16 12:29",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "42f2142163bbffa0": {
+    "title_zh": "希腊蒂诺斯岛盛大的圣母朝圣活动",
+    "description_zh": "数千名朝圣者于8月15日齐聚蒂诺斯岛，将虔诚的信仰、数百年传承的古老传统以及对“埃利”号巡洋舰的历史铭记融为一体。",
+    "cached_at": "2026-08-16 12:29",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "244e171f9240e0d5": {
+    "title_zh": "最新新闻简报 | 2026年8月16日·早间",
+    "description_zh": "聚焦2026年8月16日欧洲及全球重要资讯：为您汇集最新动态与突发要闻，涵盖国际、财经、政治、文化、娱乐及旅游等全方位内容。",
+    "cached_at": "2026-08-16 12:31",
+    "provider": "Gemini-Free#7(gemini-flash-latest)"
   }
 }
