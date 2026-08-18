@@ -154,5 +154,41 @@
     "description_zh": "一座高55.6米、据信为欧洲最高的圣母玛利亚雕像已在波兰乡村科诺托皮耶正式揭幕并获祝圣。",
     "cached_at": "2026-08-17 12:41",
     "provider": "Gemini-Free#6(gemini-flash-latest)"
+  },
+  "fda63f1c06a6201f": {
+    "title_zh": "乌克兰对俄罗斯发动大规模无人机袭击",
+    "description_zh": "乌克兰自全面战争爆发以来对俄罗斯发动了最大规模的无人机袭击之一，造成至少6人死亡，并导致莫斯科附近一处仓库发生重大火灾。俄罗斯国防部表示，其防空部队在一夜之间于全俄境内击落了至少822架乌克兰无人机。",
+    "cached_at": "2026-08-18 12:31",
+    "provider": "Gemini-Free#1(gemini-flash-latest)"
+  },
+  "e3b4b0337e7aefc1": {
+    "title_zh": "飞行员报告塞浦路斯上空出现不明光源 欧盟加强不明空中现象监测",
+    "description_zh": "飞行员报告在塞浦路斯和希腊上空目击到不明空中现象，与此同时，欧盟委员会正在加大对欧洲各地不明空中现象（UAP）报告的监测力度。",
+    "cached_at": "2026-08-18 12:32",
+    "provider": "Gemini-Free#7(gemini-flash-latest)"
+  },
+  "2a146fa594ae37db": {
+    "title_zh": "希腊政府：土耳其无法通过单方面行动获取权益",
+    "description_zh": "亚历山德拉·斯杜库表示，土耳其无法通过单方面行动获取权益，同时她概述了希腊在国防、野火防治及2030年发展规划方面的举措。",
+    "cached_at": "2026-08-18 12:33",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "fbf903462ceb6266": {
+    "title_zh": "特朗普就霍尔木兹海峡协议威胁轰炸阿曼",
+    "description_zh": "唐纳德·特朗普威胁称，如果阿曼阻挠霍尔木兹海峡协议的达成，将对其发动轰炸；与此同时，伊朗警告称，若华盛顿未能履行协议，将面临军事升级。",
+    "cached_at": "2026-08-18 12:33",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "feda5dffadef18c5": {
+    "title_zh": "希腊通过提前偿还债务节省20亿欧元",
+    "description_zh": "希腊计划在2026年提前偿还130亿欧元债务，以减轻债务负担、提振投资者信心，并在七年内节省逾20亿欧元支出。此前，希腊已于去年6月从欧元区523亿欧元的双边贷款中提前偿还了69.4亿欧元。",
+    "cached_at": "2026-08-18 12:35",
+    "provider": "Gemini-Free#6(gemini-flash-latest)"
+  },
+  "bfdc5ec8a96eb5b7": {
+    "title_zh": "委内瑞拉地震遇难人数升至6438人",
+    "description_zh": "根据委内瑞拉国会议长豪尔赫·罗德里格斯周一公布的最新初步数据，6月下旬袭击该国的双重地震已导致至少6438人遇难。在灾难发生近两个月后，救援人员与亲属仍在废墟下继续搜寻被困失踪人员的遗体。",
+    "cached_at": "2026-08-18 12:36",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
   }
 }
