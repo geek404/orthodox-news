@@ -190,5 +190,11 @@
     "description_zh": "根据委内瑞拉国会议长豪尔赫·罗德里格斯周一公布的最新初步数据，6月下旬袭击该国的双重地震已导致至少6438人遇难。在灾难发生近两个月后，救援人员与亲属仍在废墟下继续搜寻被困失踪人员的遗体。",
     "cached_at": "2026-08-18 12:36",
     "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "a8b1501d577beee7": {
+    "title_zh": "面向航运与港口的人工智能：以精准度为核心",
+    "description_zh": "Clarita Global Matrix 正在开发面向航运与港口的专业人工智能平台，重点聚焦于高精准度、数学建模以及网络安全。",
+    "cached_at": "2026-08-19 12:48",
+    "provider": "Gemini-Free#6(gemini-flash-latest)"
   }
 }
