@@ -196,5 +196,29 @@
     "description_zh": "Clarita Global Matrix 正在开发面向航运与港口的专业人工智能平台，重点聚焦于高精准度、数学建模以及网络安全。",
     "cached_at": "2026-08-19 12:48",
     "provider": "Gemini-Free#6(gemini-flash-latest)"
+  },
+  "1b8debfb110d3554": {
+    "title_zh": "希腊武装部队总参谋长会晤以色列同行",
+    "description_zh": "希腊国防军总参谋长迪米特里奥斯·胡皮斯访问以色列，并会见以色列军方及国防高级官员，旨在进一步深化双边合作。",
+    "cached_at": "2026-08-20 12:33",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "a7ad97aec8ed1346": {
+    "title_zh": "土耳其拒绝接受希腊在爱琴海的可再生能源规划",
+    "description_zh": "土耳其拒绝接受希腊最新的可再生能源规划框架，并表示鉴于双方在爱琴海的争议，该框架对安卡拉方面不具有任何法律效力。",
+    "cached_at": "2026-08-20 12:34",
+    "provider": "Gemini-Free#2(gemini-flash-latest)"
+  },
+  "19a2e875935356ed": {
+    "title_zh": "希腊因伊朗袭击威胁进入高度戒备状态",
+    "description_zh": "据报道，针对伊朗对欧洲境内美军目标的袭击威胁，希腊已提高安全戒备级别；与此同时，雅典当局正在加强在克里特岛和塞浦路斯的防御部署。",
+    "cached_at": "2026-08-20 12:35",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "d021d72ca5d5f662": {
+    "title_zh": "美国大使吉尔福伊尔会见希腊常驻联合国代表",
+    "description_zh": "美国大使金伯利·吉尔福伊尔在雅典会见了希腊常驻联合国代表阿吉·巴尔塔，双方就深化双边关系及在联合国框架下的合作进行了探讨。",
+    "cached_at": "2026-08-20 12:41",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
   }
 }
