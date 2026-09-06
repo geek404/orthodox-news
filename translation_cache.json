@@ -358,5 +358,17 @@
     "description_zh": "新闻述评（9月4日，星期五）：焦尔吉娅·梅洛尼成为意大利战后执政时间最长的总理。右翼媒体对此大加赞赏，左翼媒体则直指其领导是一场溃败。此外，欧洲是否正迎来混乱的寒冬？联合国警告“超强”厄尔尼诺现象或将引发强降雨雪天气，各方担忧与日俱增。",
     "cached_at": "2026-09-04 16:23",
     "provider": "Gemini-Free#3(gemini-flash-latest)"
+  },
+  "1f8097b7d1e783eb": {
+    "title_zh": "普世牧首在布达佩斯主持“法纳尔”中心及三圣师堂启用揭幕",
+    "description_zh": "消息来源：尼科斯·帕帕克里斯托",
+    "cached_at": "2026-09-06 15:36",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "22b64b21127b5be4": {
+    "title_zh": "能源冲击之下，欧洲中央银行预计将加息",
+    "description_zh": "随着伊朗冲突推高能源价格并加剧整个欧洲的通胀担忧，欧洲中央银行预计将把存款利率上调至2.5%。",
+    "cached_at": "2026-09-06 15:36",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
   }
 }
