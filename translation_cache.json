@@ -376,5 +376,23 @@
     "description_zh": "因指控俄罗斯发动袭击及混合战争导致两国外交紧张局势升级，俄罗斯已要求德国关闭其驻圣彼得堡领事馆。",
     "cached_at": "2026-09-08 16:32",
     "provider": "Gemini-Free#5(gemini-flash-latest)"
+  },
+  "420abdd4092d79c2": {
+    "title_zh": "澳大利亚大主教：希腊语仍是澳大利亚侨民“鲜活的现实”",
+    "description_zh": "9月8日（周二），澳大利亚大主教马卡里奥斯出席了第12届国际夏季大学开幕式并发表致辞。本届活动主题为“希腊语言、文化与媒体——澳大利亚的希腊语：从记忆到未来”。该学术与文化项目目前正在悉尼的新南威尔士大学举行。",
+    "cached_at": "2026-09-09 16:27",
+    "provider": "Gemini-Free#1(gemini-flash-latest)"
+  },
+  "1b374a1e0a86bdab": {
+    "title_zh": "“美杜莎”多国联合军演向土耳其传递明确信号",
+    "description_zh": "希腊针对在克里特岛东南部海域举行的“美杜莎26”多国联合军事演习发布了航行警告（NAVTEX）。埃及、法国、意大利和塞浦路斯亦参与本次军演。",
+    "cached_at": "2026-09-09 16:31",
+    "provider": "Gemini-Free#1(gemini-flash-latest)"
+  },
+  "be593644b4e9b153": {
+    "title_zh": "研究人员辞职并发出警告：人工智能威胁人类生存",
+    "description_zh": "人工智能公司Anthropic的一名研究人员近日辞职并发出警告。随着外界对具备自我迭代能力的超级智能以及人工智能安全问题的日益担忧，该研究人员指出，人工智能可能在十年内对人类生存构成威胁。",
+    "cached_at": "2026-09-09 16:37",
+    "provider": "Gemini-Free#5(gemini-flash-latest)"
   }
 }
