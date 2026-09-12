@@ -442,5 +442,17 @@
     "description_zh": "调查人员在对乔治·马佐纳基斯生前所接受的医疗救治展开调查后，雅典一家私立诊所的两名医生已被指控犯有危及生命致人死亡罪。",
     "cached_at": "2026-09-11 16:40",
     "provider": "Gemini-Free#6(gemini-flash-latest)"
+  },
+  "e8219b9ccc29e8ff": {
+    "title_zh": "希腊航天界领军人物呼吁女性投身航空航天领域",
+    "description_zh": "希腊航天界领军人物克里斯蒂娜·扬诺帕帕呼吁女性及青年专业人士把握欧洲航空航天领域不断增长的发展机遇。",
+    "cached_at": "2026-09-12 15:38",
+    "provider": "Gemini-Free#6(gemini-flash-latest)"
+  },
+  "6ddc577b5d7194cf": {
+    "title_zh": "乔治·马佐纳基斯在雅典诊所最后时刻的新细节披露",
+    "description_zh": "来自希腊警方案卷的新细节显示，关于乔治·马佐纳基斯在柯洛纳基一家诊所内的身体状况、救治过程及最后几小时的各方陈述存在诸多矛盾。",
+    "cached_at": "2026-09-12 15:38",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
   }
 }
