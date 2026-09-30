@@ -634,5 +634,17 @@
     "description_zh": "美国驻希腊大使金伯莉·吉尔福伊尔对在雅典爆炸事件中遇难的四名美国公民表示哀悼，并表示美国大使馆正全力为其家属提供支持与协助。",
     "cached_at": "2026-09-27 17:36",
     "provider": "Gemini-Free#7(gemini-flash-latest)"
+  },
+  "3011d954f789a314": {
+    "title_zh": "希腊敦促欧盟向红海增派军舰",
+    "description_zh": "希腊正呼吁欧盟各成员国国防部长派遣更多军舰并调配充足资源，以增强“盾牌行动”（Operation Aspides）的执行力度，切实维护红海水域的航运安全。",
+    "cached_at": "2026-09-30 18:41",
+    "provider": "Gemini-Free#4(gemini-flash-latest)"
+  },
+  "632ddb91bc93eb47": {
+    "title_zh": "土耳其称希腊—塞浦路斯海底电缆穿过其大陆架",
+    "description_zh": "据土耳其媒体报道，安卡拉方面声称希腊—塞浦路斯电网互联工程的部分路线穿越了土耳其大陆架，并要求法国在恢复该工程施工前提供书面通知。",
+    "cached_at": "2026-09-30 18:41",
+    "provider": "Gemini-Free#1(gemini-flash-latest)"
   }
 }
